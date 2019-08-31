@@ -13,7 +13,7 @@ def square_is_under_attack(x, y):
 def piece_moves(piece):
 
 
-def is_square_inside_board(x, y):
+def is_square_inside_board(x, y): #remove LBYL?
     answer = 0 <= x < 8 and 0 <= y < 8
     return answer
 
@@ -34,7 +34,7 @@ class Board:
         player_to_move = info[1]
         castling_rights = info[2]
         en_passant_target = info[3]
-        
+
     def is_piece_in_square(self, x, y): #remove LBYL?
 
     def get_piece_in_square(self, x, y):

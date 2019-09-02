@@ -14,7 +14,7 @@ def main():
 #     answer = []
 
 
-def is_square_inside_board(x, y):  # remove LBYL?
+def is_square_inside_board(x, y):
     answer = 0 <= x < 8 and 0 <= y < 8
     return answer
 
@@ -185,6 +185,25 @@ class Board:
             return True
         elif is_square_inside_board(x+2, y-1) and self.board[y-1][x+2] == enemy[1]:
             return True
+        # king attack checks
+        if is_square_inside_board(x+1, y+1) and self.board[y+1][x+1] == enemy[4]:
+            return True
+        elif is_square_inside_board(x+1, y) and self.board[y][x+1] == enemy[4]:
+            return True
+        elif is_square_inside_board(x+1, y-1) and self.board[y-1][x+1] == enemy[4]:
+            return True
+        elif is_square_inside_board(x, y+1) and self.board[y+1][x] == enemy[4]:
+            return True
+        elif is_square_inside_board(x, y-1) and self.board[y-1][x] == enemy[4]:
+            return True
+        elif is_square_inside_board(x-1, y+1) and self.board[y+1][x-1] == enemy[4]:
+            return True
+        elif is_square_inside_board(x-1, y) and self.board[y][x-1] == enemy[4]:
+            return True
+        elif is_square_inside_board(x-1, y-1) and self.board[y-1][x-1] == enemy[4]:
+            return True
+        # if it hasn't returned by now, the square is not under attack
+        return False
 
 if __name__ == '__main__':
     main()

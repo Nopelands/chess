@@ -1,7 +1,7 @@
 def main():
-    test = Board("rnbqkbnr/8/8/8/4B3/5b2/6b1/7Q w KQkq -")
+    test = Board("rnbqkbnr/8/8/3N4/8/8/8/8 w KQkq -")
     print(test.board)
-    print(test.square_is_under_attack(6, 6))
+    print(test.square_is_under_attack(2, 1))
 
 
 # def generator(fen_board, x, y):
@@ -168,7 +168,23 @@ class Board:
                 return True
             else:
                 cursor_x = -1
-
+        # knight attack checks
+        if is_square_inside_board(x+1, y+2) and self.board[y+2][x+1] == enemy[1]:
+            return True
+        elif is_square_inside_board(x+2, y+1) and self.board[y+1][x+2] == enemy[1]:
+            return True
+        elif is_square_inside_board(x-1, y+2) and self.board[y+2][x-1] == enemy[1]:
+            return True
+        elif is_square_inside_board(x-2, y+1) and self.board[y+1][x-2] == enemy[1]:
+            return True
+        elif is_square_inside_board(x-2, y-1) and self.board[y-1][x-2] == enemy[1]:
+            return True
+        elif is_square_inside_board(x-1, y-2) and self.board[y-2][x-1] == enemy[1]:
+            return True
+        elif is_square_inside_board(x+1, y-2) and self.board[y-2][x+1] == enemy[1]:
+            return True
+        elif is_square_inside_board(x+2, y-1) and self.board[y-1][x+2] == enemy[1]:
+            return True
 
 if __name__ == '__main__':
     main()

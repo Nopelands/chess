@@ -1,7 +1,7 @@
 def main():
-    test = Board("rnbqkbnr/8/8/8/8/8/8/8 w KQkq -")
+    test = Board("rnbqkbnr/8/8/8/4B3/5b2/6b1/7Q w KQkq -")
     print(test.board)
-    print(test.square_is_under_attack(7, 2))
+    print(test.square_is_under_attack(6, 6))
 
 
 # def generator(fen_board, x, y):
@@ -124,7 +124,50 @@ class Board:
                 return True
             else:
                 cursor = -1
-
+        # this checks for bishops and queens in the direction of the first quadrant
+        cursor_x = x+1
+        cursor_y = y+1
+        while is_square_inside_board(cursor_x, cursor_y):
+            if self.board[cursor_y][cursor_x] == "empty":
+                cursor_x += 1
+                cursor_y += 1
+            elif self.board[cursor_y][cursor_x] == enemy[2] or self.board[cursor_y][cursor_x] == enemy[3]:
+                return True
+            else:
+                cursor_x = -1
+        # this checks for bishops and queens in the direction of the second quadrant
+        cursor_x = x-1
+        cursor_y = y+1
+        while is_square_inside_board(cursor_x, cursor_y):
+            if self.board[cursor_y][cursor_x] == "empty":
+                cursor_x -= 1
+                cursor_y += 1
+            elif self.board[cursor_y][cursor_x] == enemy[2] or self.board[cursor_y][cursor_x] == enemy[3]:
+                return True
+            else:
+                cursor_x = -1
+        # this checks for bishops and queens in the direction of the third quadrant
+        cursor_x = x - 1
+        cursor_y = y - 1
+        while is_square_inside_board(cursor_x, cursor_y):
+            if self.board[cursor_y][cursor_x] == "empty":
+                cursor_x -= 1
+                cursor_y -= 1
+            elif self.board[cursor_y][cursor_x] == enemy[2] or self.board[cursor_y][cursor_x] == enemy[3]:
+                return True
+            else:
+                cursor_x = -1
+        # this checks for bishops and queen in the direction of the fourth quadrant
+        cursor_x = x + 1
+        cursor_y = y - 1
+        while is_square_inside_board(cursor_x, cursor_y):
+            if self.board[cursor_y][cursor_x] == "empty":
+                cursor_x += 1
+                cursor_y -= 1
+            elif self.board[cursor_y][cursor_x] == enemy[2] or self.board[cursor_y][cursor_x] == enemy[3]:
+                return True
+            else:
+                cursor_x = -1
 
 
 if __name__ == '__main__':

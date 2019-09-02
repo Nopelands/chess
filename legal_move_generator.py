@@ -1,7 +1,7 @@
 def main():
-    print(fen_to_board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -"))
-    test = Board("rnbqkbnr/pppppppp/7P/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -")
-    print(test.square_is_under_attack(0, 1))
+    test = Board("rnbqkbnr/8/8/8/8/8/8/8 w KQkq -")
+    print(test.board)
+    print(test.square_is_under_attack(7, 2))
 
 
 # def generator(fen_board, x, y):
@@ -65,29 +65,66 @@ class Board:
             enemy = enemy.upper()
             # checks for existing en passants and black pawn attacks
             if str(x) + str(y-1) == self.en_passant_target:
-                if self.board[y][x+1] == enemy[5] and is_square_inside_board(x+1, y):
+                if is_square_inside_board(x+1, y) and self.board[y][x+1] == enemy[5]:
                     return True
-                if self.board[y][x-1] == enemy[5] and is_square_inside_board(x-1, y):
+                if is_square_inside_board(x-1, y) and self.board[y][x-1] == enemy[5]:
                     return True
             # this checks for generic black pawn attacks
             else:
-                if self.board[y+1][x + 1] == enemy[5] and is_square_inside_board(x+1, y+1):
+                if is_square_inside_board(x+1, y+1) and self.board[y+1][x + 1] == enemy[5]:
                     return True
-                if self.board[y+1][x - 1] == enemy[5] and is_square_inside_board(x-1, y+1):
+                if is_square_inside_board(x-1, y+1) and self.board[y+1][x - 1] == enemy[5]:
                     return True
         else:
             # checks for existing en passants and white pawn attacks
             if str(x) + str(y+1) == self.en_passant_target:
-                if self.board[y][x+1] == enemy[5] and is_square_inside_board(x+1, y):
+                if is_square_inside_board(x+1, y) and self.board[y][x+1] == enemy[5]:
                     return True
-                if self.board[y][x-1] == enemy[5] and is_square_inside_board(x-1, y):
+                if is_square_inside_board(x-1, y) and self.board[y][x-1] == enemy[5]:
                     return True
             # checks for generic white pawn attacks
             else:
-                if self.board[y-1][x + 1] == enemy[5] and is_square_inside_board(x+1, y-1):
+                if is_square_inside_board(x+1, y-1) and self.board[y-1][x + 1] == enemy[5]:
                     return True
-                if self.board[y-1][x - 1] == enemy[5] and is_square_inside_board(x-1, y-1):
+                if is_square_inside_board(x-1, y-1) and self.board[y-1][x - 1] == enemy[5]:
                     return True
+        # this checks for rooks and queens with sight to the left of x
+        cursor = x - 1
+        while is_square_inside_board(cursor, y):
+            if self.board[y][cursor] == "empty":
+                cursor = cursor - 1
+            elif self.board[y][cursor] == enemy[0] or self.board[y][cursor] == enemy[3]:
+                return True
+            else:
+                cursor = -1
+        # this checks for rooks and queens with sight to the right of x
+        cursor = x + 1
+        while is_square_inside_board(cursor, y):
+            if self.board[y][cursor] == "empty":
+                cursor = cursor + 1
+            elif self.board[y][cursor] == enemy[0] or self.board[y][cursor] == enemy[3]:
+                return True
+            else:
+                cursor = -1
+        # this checks for rooks and queens with sight upwards of y
+        cursor = y - 1
+        while is_square_inside_board(x, cursor):
+            if self.board[cursor][x] == "empty":
+                cursor = cursor - 1
+            elif self.board[cursor][x] == enemy[0] or self.board[cursor][x] == enemy[3]:
+                return True
+            else:
+                cursor = -1
+        # this checks for rooks and queens with sight downwards of y
+        cursor = y + 1
+        while is_square_inside_board(cursor, y):
+            if self.board[cursor][x] == "empty":
+                cursor = cursor + 1
+            elif self.board[cursor][x] == enemy[0] or self.board[cursor][x] == enemy[3]:
+                return True
+            else:
+                cursor = -1
+
 
 
 if __name__ == '__main__':

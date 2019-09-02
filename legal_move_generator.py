@@ -34,8 +34,9 @@ def fen_to_board(fen):
     answer.append(final_board)
     answer.append(info_list[1])
     answer.append(info_list[2])
-    if len(info_list[3]) > 1:  # converts notation to list index using magic numbers
-        info_list[3] = ord(info_list[3][0]) - 96 + info_list[3][1]
+    a_char_ord_constant = 97
+    if len(info_list[3]) > 1:  # converts notation to xy coordinates
+        info_list[3] = ord(info_list[3][0]) - a_char_ord_constant + info_list[3][1]
     answer.append(info_list[3])
     return answer
 

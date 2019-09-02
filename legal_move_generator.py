@@ -1,6 +1,7 @@
 def main():
     print(fen_to_board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -"))
-    test = Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -")
+    test = Board("rnbqkbnr/pppppppp/7P/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -")
+    print(test.square_is_under_attack(0, 1))
 
 
 # def generator(fen_board, x, y):
@@ -9,10 +10,7 @@ def main():
 # def pseudo_legal_generator(board, x, y):
 #
 #
-# def square_is_under_attack(x, y):
-#
-#
-# def piece_moves(board, x, y):
+# def piece_moves(board, x, y): # why
 #     answer = []
 
 
@@ -60,6 +58,36 @@ class Board:
     #
     def get_piece_in_square(self, x, y):
         return self.board[y][x]
+
+    def square_is_under_attack(self, x, y):
+        enemy = "rnbqkp"
+        if self.player_to_move == "w":
+            enemy = enemy.upper()
+            # checks for existing en passants and black pawn attacks
+            if str(x) + str(y-1) == self.en_passant_target:
+                if self.board[y][x+1] == enemy[5] and is_square_inside_board(x+1, y):
+                    return True
+                if self.board[y][x-1] == enemy[5] and is_square_inside_board(x-1, y):
+                    return True
+            # this checks for generic black pawn attacks
+            else:
+                if self.board[y+1][x + 1] == enemy[5] and is_square_inside_board(x+1, y+1):
+                    return True
+                if self.board[y+1][x - 1] == enemy[5] and is_square_inside_board(x-1, y+1):
+                    return True
+        else:
+            # checks for existing en passants and white pawn attacks
+            if str(x) + str(y+1) == self.en_passant_target:
+                if self.board[y][x+1] == enemy[5] and is_square_inside_board(x+1, y):
+                    return True
+                if self.board[y][x-1] == enemy[5] and is_square_inside_board(x-1, y):
+                    return True
+            # checks for generic white pawn attacks
+            else:
+                if self.board[y-1][x + 1] == enemy[5] and is_square_inside_board(x+1, y-1):
+                    return True
+                if self.board[y-1][x - 1] == enemy[5] and is_square_inside_board(x-1, y-1):
+                    return True
 
 
 if __name__ == '__main__':

@@ -1,5 +1,6 @@
 def main():
     print(fen_to_board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -"))
+    test = Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -")
 
 
 # def generator(fen_board, x, y):
@@ -11,7 +12,8 @@ def main():
 # def square_is_under_attack(x, y):
 #
 #
-# def piece_moves(piece):
+# def piece_moves(board, x, y):
+#     answer = []
 
 
 def is_square_inside_board(x, y):  # remove LBYL?
@@ -24,7 +26,7 @@ def fen_to_board(fen):
     info_list = fen.split(" ")
     board_state = info_list[0].split("/")
     final_board = [[] for i in range(8)]
-    for i in range(len(board_state)):
+    for i in range(len(board_state)):  # places pieces and fills empty spaces when a number is found
         for j in range(len(board_state[i])):
             if board_state[i][j].isnumeric():
                 for k in range(int(board_state[i][j])):
@@ -42,21 +44,22 @@ def fen_to_board(fen):
 
 
 class Board:
-    board = []
+    board = []  # coordinates work in y x notation
     player_to_move = ""
     castling_rights = []
     en_passant_target = []
 
     def __init__(self, fen):
         info = fen_to_board(fen)
-        board = info[0]
-        player_to_move = info[1]
-        castling_rights = info[2]
-        en_passant_target = info[3]
+        self.board = info[0]
+        self.player_to_move = info[1]
+        self.castling_rights = info[2]
+        self.en_passant_target = info[3]
 
     # def is_piece_in_square(self, x, y): #remove LBYL?
     #
-    # def get_piece_in_square(self, x, y):
+    def get_piece_in_square(self, x, y):
+        return self.board[y][x]
 
 
 if __name__ == '__main__':

@@ -1,7 +1,7 @@
 def main():
-    test = Board("rnbqkbnr/P6r/8/8/8/8/8/8 w KQkq b2")
+    test = Board("rnbqkbnr/8/8/8/8/8/8/5P2 w KQkq b2")
     print(test.board)
-    print(pseudo_legal_generator(test, 7, 1))
+    print(pseudo_legal_generator(test, 5, 0))
 
 
 # def generator(fen_board, x, y):
@@ -91,6 +91,59 @@ def pseudo_legal_generator(board, x, y):
                 cursor = -1
             else:
                 cursor = -1
+    elif piece.lower() == "b":
+        # this checks for bishop movement in the direction of the first quadrant
+        cursor_x = x + 1
+        cursor_y = y + 1
+        while is_square_inside_board(cursor_x, cursor_y):
+            if board.board[cursor_y][cursor_x] == "empty":
+                answer.append(str(cursor_x) + str(cursor_y))
+                cursor_x += 1
+                cursor_y += 1
+            elif board.board[cursor_y][cursor_x] in enemy:
+                answer.append(str(cursor_x) + str(cursor_y))
+                cursor_x = -1
+            else:
+                cursor_x = -1
+        # this checks for bishop movement in the direction of the second quadrant
+        cursor_x = x - 1
+        cursor_y = y + 1
+        while is_square_inside_board(cursor_x, cursor_y):
+            if board.board[cursor_y][cursor_x] == "empty":
+                answer.append(str(cursor_x) + str(cursor_y))
+                cursor_x -= 1
+                cursor_y += 1
+            elif board.board[cursor_y][cursor_x] in enemy:
+                answer.append(str(cursor_x) + str(cursor_y))
+                cursor_x = -1
+            else:
+                cursor_x = -1
+        # this checks for bishop movement in the direction of the third quadrant
+        cursor_x = x - 1
+        cursor_y = y - 1
+        while is_square_inside_board(cursor_x, cursor_y):
+            if board.board[cursor_y][cursor_x] == "empty":
+                answer.append(str(cursor_x) + str(cursor_y))
+                cursor_x -= 1
+                cursor_y -= 1
+            elif board.board[cursor_y][cursor_x] in enemy:
+                answer.append(str(cursor_x) + str(cursor_y))
+                cursor_x = -1
+            else:
+                cursor_x = -1
+        # this checks for bishop movement in the direction of the fourth quadrant
+        cursor_x = x + 1
+        cursor_y = y - 1
+        while is_square_inside_board(cursor_x, cursor_y):
+            if board.board[cursor_y][cursor_x] == "empty":
+                answer.append(str(cursor_x) + str(cursor_y))
+                cursor_x += 1
+                cursor_y -= 1
+            elif board.board[cursor_y][cursor_x] in enemy:
+                answer.append(str(cursor_x) + str(cursor_y))
+                cursor_x = -1
+            else:
+                cursor_x = -1
     return answer
 
 # def piece_moves(board, x, y): # why

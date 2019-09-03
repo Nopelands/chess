@@ -1,7 +1,7 @@
 def main():
-    test = Board("rnbqkbnr/p7/8/8/8/8/8/8 w KQkq b2")
+    test = Board("rnbqkbnr/P6r/8/8/8/8/8/8 w KQkq b2")
     print(test.board)
-    print(pseudo_legal_generator(test, 0, 1))
+    print(pseudo_legal_generator(test, 7, 1))
 
 
 # def generator(fen_board, x, y):
@@ -15,6 +15,7 @@ def pseudo_legal_generator(board, x, y):
     if board.player_to_move == "w":
         enemy = enemy.upper()
     if piece == "p":
+        # this checks normal pawn movement and 2-square advances
         if is_square_inside_board(x, y+1) and board.board[y+1][x] == "empty":
             if y == 1:
                 if board.board[y+2][x] == "empty":
@@ -24,11 +25,13 @@ def pseudo_legal_generator(board, x, y):
                     answer.append(str(x) + str(y+1))
             else:
                 answer.append(str(x) + str(y+1))
+        # this checks both normal pawn capture and en passant
         if is_square_inside_board(x-1, y+1) and (board.board[y+1][x-1] in enemy or str(x-1) + str(y+1) == board.en_passant_target):
             answer.append(str(x-1) + str(y+1))
         if is_square_inside_board(x+1, y+1) and (board.board[y+1][x+1] in enemy or str(x+1) + str(y+1) == board.en_passant_target):
             answer.append(str(x+1) + str(y+1))
     elif piece == "P":
+        # this checks normal pawn movement and 2-square advances
         if is_square_inside_board(x, y-1) and board.board[y-1][x] == "empty":
             if y == 6:
                 if board.board[y-2][x] == "empty":
@@ -38,10 +41,56 @@ def pseudo_legal_generator(board, x, y):
                     answer.append(str(x) + str(y-1))
             else:
                 answer.append(str(x) + str(y-1))
+        # this checks both normal pawn capture and en passant
         if is_square_inside_board(x-1, y-1) and (board.board[y-1][x-1] in enemy or str(x-1) + str(y-1) == board.en_passant_target):
             answer.append(str(x-1) + str(y-1))
         if is_square_inside_board(x+1, y-1) and (board.board[y-1][x+1] in enemy or str(x+1) + str(y-1) == board.en_passant_target):
             answer.append(str(x+1) + str(y-1))
+    elif piece.lower() == "r":
+        # this checks for rook movement and capture to the left
+        cursor = x - 1
+        while is_square_inside_board(cursor, y):
+            if board.board[y][cursor] == "empty":
+                answer.append(str(cursor) + str(y))
+                cursor -= 1
+            elif board.board[y][cursor] in enemy:
+                answer.append(str(cursor) + str(y))
+                cursor = -1
+            else:
+                cursor = -1
+        # this checks for rook movement and capture to the right
+        cursor = x + 1
+        while is_square_inside_board(cursor, y):
+            if board.board[y][cursor] == "empty":
+                answer.append(str(cursor) + str(y))
+                cursor += 1
+            elif board.board[y][cursor] in enemy:
+                answer.append(str(cursor) + str(y))
+                cursor = -1
+            else:
+                cursor = -1
+        # this checks for rook movement and capture upwards
+        cursor = y + 1
+        while is_square_inside_board(x, cursor):
+            if board.board[cursor][x] == "empty":
+                answer.append(str(x) + str(cursor))
+                cursor += 1
+            elif board.board[cursor][x] in enemy:
+                answer.append(str(x) + str(cursor))
+                cursor = -1
+            else:
+                cursor = -1
+        # this checks for rook movement and capture downwards
+        cursor = y - 1
+        while is_square_inside_board(x, cursor):
+            if board.board[cursor][x] == "empty":
+                answer.append(str(x) + str(cursor))
+                cursor -= 1
+            elif board.board[cursor][x] in enemy:
+                answer.append(str(x) + str(cursor))
+                cursor = -1
+            else:
+                cursor = -1
     return answer
 
 # def piece_moves(board, x, y): # why

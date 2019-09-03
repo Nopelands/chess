@@ -144,6 +144,103 @@ def pseudo_legal_generator(board, x, y):
                 cursor_x = -1
             else:
                 cursor_x = -1
+    elif piece.lower() == "q":
+        # this checks for queen movement and capture to the left
+        cursor = x - 1
+        while is_square_inside_board(cursor, y):
+            if board.board[y][cursor] == "empty":
+                answer.append(str(cursor) + str(y))
+                cursor -= 1
+            elif board.board[y][cursor] in enemy:
+                answer.append(str(cursor) + str(y))
+                cursor = -1
+            else:
+                cursor = -1
+        # this checks for queen movement and capture to the right
+        cursor = x + 1
+        while is_square_inside_board(cursor, y):
+            if board.board[y][cursor] == "empty":
+                answer.append(str(cursor) + str(y))
+                cursor += 1
+            elif board.board[y][cursor] in enemy:
+                answer.append(str(cursor) + str(y))
+                cursor = -1
+            else:
+                cursor = -1
+        # this checks for queen movement and capture upwards
+        cursor = y + 1
+        while is_square_inside_board(x, cursor):
+            if board.board[cursor][x] == "empty":
+                answer.append(str(x) + str(cursor))
+                cursor += 1
+            elif board.board[cursor][x] in enemy:
+                answer.append(str(x) + str(cursor))
+                cursor = -1
+            else:
+                cursor = -1
+        # this checks for queen movement and capture downwards
+        cursor = y - 1
+        while is_square_inside_board(x, cursor):
+            if board.board[cursor][x] == "empty":
+                answer.append(str(x) + str(cursor))
+                cursor -= 1
+            elif board.board[cursor][x] in enemy:
+                answer.append(str(x) + str(cursor))
+                cursor = -1
+            else:
+                cursor = -1
+        # this checks for queen movement in the direction of the first quadrant
+        cursor_x = x + 1
+        cursor_y = y + 1
+        while is_square_inside_board(cursor_x, cursor_y):
+            if board.board[cursor_y][cursor_x] == "empty":
+                answer.append(str(cursor_x) + str(cursor_y))
+                cursor_x += 1
+                cursor_y += 1
+            elif board.board[cursor_y][cursor_x] in enemy:
+                answer.append(str(cursor_x) + str(cursor_y))
+                cursor_x = -1
+            else:
+                cursor_x = -1
+        # this checks for queen movement in the direction of the second quadrant
+        cursor_x = x - 1
+        cursor_y = y + 1
+        while is_square_inside_board(cursor_x, cursor_y):
+            if board.board[cursor_y][cursor_x] == "empty":
+                answer.append(str(cursor_x) + str(cursor_y))
+                cursor_x -= 1
+                cursor_y += 1
+            elif board.board[cursor_y][cursor_x] in enemy:
+                answer.append(str(cursor_x) + str(cursor_y))
+                cursor_x = -1
+            else:
+                cursor_x = -1
+        # this checks for queen movement in the direction of the third quadrant
+        cursor_x = x - 1
+        cursor_y = y - 1
+        while is_square_inside_board(cursor_x, cursor_y):
+            if board.board[cursor_y][cursor_x] == "empty":
+                answer.append(str(cursor_x) + str(cursor_y))
+                cursor_x -= 1
+                cursor_y -= 1
+            elif board.board[cursor_y][cursor_x] in enemy:
+                answer.append(str(cursor_x) + str(cursor_y))
+                cursor_x = -1
+            else:
+                cursor_x = -1
+        # this checks for queen movement in the direction of the fourth quadrant
+        cursor_x = x + 1
+        cursor_y = y - 1
+        while is_square_inside_board(cursor_x, cursor_y):
+            if board.board[cursor_y][cursor_x] == "empty":
+                answer.append(str(cursor_x) + str(cursor_y))
+                cursor_x += 1
+                cursor_y -= 1
+            elif board.board[cursor_y][cursor_x] in enemy:
+                answer.append(str(cursor_x) + str(cursor_y))
+                cursor_x = -1
+            else:
+                cursor_x = -1
     return answer
 
 # def piece_moves(board, x, y): # why

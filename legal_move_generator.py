@@ -1,5 +1,5 @@
 def main():
-    test = Board("rnbqkbnr/p7/1P6/8/8/8/8/8 w KQkq -")
+    test = Board("rnbqkbnr/p7/8/8/8/8/8/8 w KQkq b2")
     print(test.board)
     print(pseudo_legal_generator(test, 0, 1))
 
@@ -24,9 +24,9 @@ def pseudo_legal_generator(board, x, y):
                     answer.append(str(x) + str(y+1))
             else:
                 answer.append(str(x) + str(y+1))
-        if is_square_inside_board(x-1, y+1) and board.board[y+1][x-1] in enemy:
+        if is_square_inside_board(x-1, y+1) and (board.board[y+1][x-1] in enemy or str(x-1) + str(y+1) == board.en_passant_target):
             answer.append(str(x-1) + str(y+1))
-        if is_square_inside_board(x+1, y+1) and board.board[y+1][x+1] in enemy:
+        if is_square_inside_board(x+1, y+1) and (board.board[y+1][x+1] in enemy or str(x+1) + str(y+1) == board.en_passant_target):
             answer.append(str(x+1) + str(y+1))
     return answer
 
@@ -56,7 +56,7 @@ def fen_to_board(fen):
     answer.append(info_list[2])
     a_char_ord_constant = 97
     if len(info_list[3]) > 1:  # converts notation to xy coordinates
-        info_list[3] = ord(info_list[3][0]) - a_char_ord_constant + info_list[3][1]
+        info_list[3] = str(ord(info_list[3][0]) - a_char_ord_constant) + info_list[3][1]
     answer.append(info_list[3])
     return answer
 

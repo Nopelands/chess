@@ -28,6 +28,20 @@ def pseudo_legal_generator(board, x, y):
             answer.append(str(x-1) + str(y+1))
         if is_square_inside_board(x+1, y+1) and (board.board[y+1][x+1] in enemy or str(x+1) + str(y+1) == board.en_passant_target):
             answer.append(str(x+1) + str(y+1))
+    elif piece == "P":
+        if is_square_inside_board(x, y-1) and board.board[y-1][x] == "empty":
+            if y == 6:
+                if board.board[y-2][x] == "empty":
+                    answer.append(str(x) + str(y-1))
+                    answer.append(str(x) + str(y-2))
+                else:
+                    answer.append(str(x) + str(y-1))
+            else:
+                answer.append(str(x) + str(y-1))
+        if is_square_inside_board(x-1, y-1) and (board.board[y-1][x-1] in enemy or str(x-1) + str(y-1) == board.en_passant_target):
+            answer.append(str(x-1) + str(y-1))
+        if is_square_inside_board(x+1, y-1) and (board.board[y-1][x+1] in enemy or str(x+1) + str(y-1) == board.en_passant_target):
+            answer.append(str(x+1) + str(y-1))
     return answer
 
 # def piece_moves(board, x, y): # why

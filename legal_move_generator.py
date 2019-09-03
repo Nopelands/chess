@@ -1,15 +1,35 @@
 def main():
-    test = Board("rnbqkbnr/8/8/3N4/8/8/8/8 w KQkq -")
+    test = Board("rnbqkbnr/p7/1P6/8/8/8/8/8 w KQkq -")
     print(test.board)
-    print(test.square_is_under_attack(2, 1))
+    print(pseudo_legal_generator(test, 0, 1))
 
 
 # def generator(fen_board, x, y):
 #
 #
-# def pseudo_legal_generator(board, x, y):
-#
-#
+def pseudo_legal_generator(board, x, y):
+    board = board
+    piece = board.get_piece_in_square(x, y)
+    answer = []
+    enemy = "rnbqkp"
+    if board.player_to_move == "w":
+        enemy = enemy.upper()
+    if piece == "p":
+        if is_square_inside_board(x, y+1) and board.board[y+1][x] == "empty":
+            if y == 1:
+                if board.board[y+2][x] == "empty":
+                    answer.append(str(x) + str(y+1))
+                    answer.append(str(x) + str(y+2))
+                else:
+                    answer.append(str(x) + str(y+1))
+            else:
+                answer.append(str(x) + str(y+1))
+        if is_square_inside_board(x-1, y+1) and board.board[y+1][x-1] in enemy:
+            answer.append(str(x-1) + str(y+1))
+        if is_square_inside_board(x+1, y+1) and board.board[y+1][x+1] in enemy:
+            answer.append(str(x+1) + str(y+1))
+    return answer
+
 # def piece_moves(board, x, y): # why
 #     answer = []
 

@@ -315,10 +315,6 @@ def pseudo_legal_generator(board, x, y):
     return answer
 
 
-# def piece_moves(board, x, y): # why
-#     answer = []
-
-
 def is_square_inside_board(x, y):
     answer = 0 <= x < 8 and 0 <= y < 8
     return answer

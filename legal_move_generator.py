@@ -4,7 +4,7 @@ from Board import Board, is_square_inside_board
 def main():
     print(generator("r3k2r/8/8/8/8/8/8/4R3 w KQkq b2", 4, 0))
 
-
+# TODO use board read and write methods
 def generator(fen_board, x, y):
     answer = []
     board = Board(fen_board)
@@ -30,7 +30,7 @@ def generator(fen_board, x, y):
                     answer.append("20")
     return answer
 
-
+# TODO use board read and write methods
 def pseudo_legal_generator(board, x, y):
     board = board
     piece = board.get_piece_in_square(x, y)

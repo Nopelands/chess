@@ -24,7 +24,7 @@ def fen_to_board(fen):
     answer.append(info_list[3])
     return answer
 
-
+# TODO develop board read and write methods
 class Board:
     board = []  # coordinates work in y x notation
     player_to_move = ""

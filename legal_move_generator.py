@@ -16,36 +16,40 @@ def pseudo_legal_generator(board, x, y):
         enemy = enemy.upper()
     if piece == "p":
         # this checks normal pawn movement and 2-square advances
-        if is_square_inside_board(x, y+1) and board.board[y+1][x] == "empty":
+        if is_square_inside_board(x, y + 1) and board.board[y + 1][x] == "empty":
             if y == 1:
-                if board.board[y+2][x] == "empty":
-                    answer.append(str(x) + str(y+1))
-                    answer.append(str(x) + str(y+2))
+                if board.board[y + 2][x] == "empty":
+                    answer.append(str(x) + str(y + 1))
+                    answer.append(str(x) + str(y + 2))
                 else:
-                    answer.append(str(x) + str(y+1))
+                    answer.append(str(x) + str(y + 1))
             else:
-                answer.append(str(x) + str(y+1))
+                answer.append(str(x) + str(y + 1))
         # this checks both normal pawn capture and en passant
-        if is_square_inside_board(x-1, y+1) and (board.board[y+1][x-1] in enemy or str(x-1) + str(y+1) == board.en_passant_target):
-            answer.append(str(x-1) + str(y+1))
-        if is_square_inside_board(x+1, y+1) and (board.board[y+1][x+1] in enemy or str(x+1) + str(y+1) == board.en_passant_target):
-            answer.append(str(x+1) + str(y+1))
+        if is_square_inside_board(x - 1, y + 1) and (
+                board.board[y + 1][x - 1] in enemy or str(x - 1) + str(y + 1) == board.en_passant_target):
+            answer.append(str(x - 1) + str(y + 1))
+        if is_square_inside_board(x + 1, y + 1) and (
+                board.board[y + 1][x + 1] in enemy or str(x + 1) + str(y + 1) == board.en_passant_target):
+            answer.append(str(x + 1) + str(y + 1))
     elif piece == "P":
         # this checks normal pawn movement and 2-square advances
-        if is_square_inside_board(x, y-1) and board.board[y-1][x] == "empty":
+        if is_square_inside_board(x, y - 1) and board.board[y - 1][x] == "empty":
             if y == 6:
-                if board.board[y-2][x] == "empty":
-                    answer.append(str(x) + str(y-1))
-                    answer.append(str(x) + str(y-2))
+                if board.board[y - 2][x] == "empty":
+                    answer.append(str(x) + str(y - 1))
+                    answer.append(str(x) + str(y - 2))
                 else:
-                    answer.append(str(x) + str(y-1))
+                    answer.append(str(x) + str(y - 1))
             else:
-                answer.append(str(x) + str(y-1))
+                answer.append(str(x) + str(y - 1))
         # this checks both normal pawn capture and en passant
-        if is_square_inside_board(x-1, y-1) and (board.board[y-1][x-1] in enemy or str(x-1) + str(y-1) == board.en_passant_target):
-            answer.append(str(x-1) + str(y-1))
-        if is_square_inside_board(x+1, y-1) and (board.board[y-1][x+1] in enemy or str(x+1) + str(y-1) == board.en_passant_target):
-            answer.append(str(x+1) + str(y-1))
+        if is_square_inside_board(x - 1, y - 1) and (
+                board.board[y - 1][x - 1] in enemy or str(x - 1) + str(y - 1) == board.en_passant_target):
+            answer.append(str(x - 1) + str(y - 1))
+        if is_square_inside_board(x + 1, y - 1) and (
+                board.board[y - 1][x + 1] in enemy or str(x + 1) + str(y - 1) == board.en_passant_target):
+            answer.append(str(x + 1) + str(y - 1))
     elif piece.lower() == "r":
         # this checks for rook movement and capture to the left
         cursor = x - 1
@@ -242,40 +246,53 @@ def pseudo_legal_generator(board, x, y):
             else:
                 cursor_x = -1
     elif piece.lower() == "n":
-        if is_square_inside_board(x+1, y+2) and (board.board[y+2][x+1] in enemy or board.board[y+2][x+1] == "empty"):
+        if is_square_inside_board(x + 1, y + 2) and (
+                board.board[y + 2][x + 1] in enemy or board.board[y + 2][x + 1] == "empty"):
             answer.append(str(x + 1) + str(y + 2))
-        if is_square_inside_board(x+2, y+1) and (board.board[y+1][x+2] in enemy or board.board[y+1][x+2] == "empty"):
+        if is_square_inside_board(x + 2, y + 1) and (
+                board.board[y + 1][x + 2] in enemy or board.board[y + 1][x + 2] == "empty"):
             answer.append(str(x + 2) + str(y + 1))
-        if is_square_inside_board(x-1, y+2) and (board.board[y+2][x-1] in enemy or board.board[y+2][x-1] == "empty"):
+        if is_square_inside_board(x - 1, y + 2) and (
+                board.board[y + 2][x - 1] in enemy or board.board[y + 2][x - 1] == "empty"):
             answer.append(str(x - 1) + str(y + 2))
-        if is_square_inside_board(x-2, y+1) and (board.board[y+1][x-2] in enemy or board.board[y+1][x-2] == "empty"):
+        if is_square_inside_board(x - 2, y + 1) and (
+                board.board[y + 1][x - 2] in enemy or board.board[y + 1][x - 2] == "empty"):
             answer.append(str(x - 2) + str(y + 1))
-        if is_square_inside_board(x-2, y-1) and (board.board[y-1][x-2] in enemy or board.board[y-1][x-2] == "empty"):
+        if is_square_inside_board(x - 2, y - 1) and (
+                board.board[y - 1][x - 2] in enemy or board.board[y - 1][x - 2] == "empty"):
             answer.append(str(x - 2) + str(y - 1))
-        if is_square_inside_board(x-1, y-2) and (board.board[y-2][x-1] in enemy or board.board[y-2][x-1] == "empty"):
+        if is_square_inside_board(x - 1, y - 2) and (
+                board.board[y - 2][x - 1] in enemy or board.board[y - 2][x - 1] == "empty"):
             answer.append(str(x - 1) + str(y - 2))
-        if is_square_inside_board(x+1, y-2) and (board.board[y-2][x+1] in enemy or board.board[y-2][x+1] == "empty"):
+        if is_square_inside_board(x + 1, y - 2) and (
+                board.board[y - 2][x + 1] in enemy or board.board[y - 2][x + 1] == "empty"):
             answer.append(str(x + 1) + str(y - 2))
-        if is_square_inside_board(x+2, y-1) and (board.board[y-1][x+2] in enemy or board.board[y-1][x+2] == "empty"):
+        if is_square_inside_board(x + 2, y - 1) and (
+                board.board[y - 1][x + 2] in enemy or board.board[y - 1][x + 2] == "empty"):
             answer.append(str(x + 2) + str(y - 1))
     elif piece.lower() == "k":
-        if is_square_inside_board(x, y+1) and (board.board[y+1][x] in enemy or board.board[y+1][x] == "empty"):
+        if is_square_inside_board(x, y + 1) and (board.board[y + 1][x] in enemy or board.board[y + 1][x] == "empty"):
             answer.append(str(x) + str(y + 1))
-        if is_square_inside_board(x+1, y+1) and (board.board[y+1][x+1] in enemy or board.board[y+1][x+1] == "empty"):
+        if is_square_inside_board(x + 1, y + 1) and (
+                board.board[y + 1][x + 1] in enemy or board.board[y + 1][x + 1] == "empty"):
             answer.append(str(x + 1) + str(y + 1))
-        if is_square_inside_board(x+1, y) and (board.board[y][x+1] in enemy or board.board[y][x+1] == "empty"):
+        if is_square_inside_board(x + 1, y) and (board.board[y][x + 1] in enemy or board.board[y][x + 1] == "empty"):
             answer.append(str(x + 1) + str(y))
-        if is_square_inside_board(x+1, y-1) and (board.board[y-1][x+1] in enemy or board.board[y-1][x+1] == "empty"):
+        if is_square_inside_board(x + 1, y - 1) and (
+                board.board[y - 1][x + 1] in enemy or board.board[y - 1][x + 1] == "empty"):
             answer.append(str(x + 1) + str(y - 1))
-        if is_square_inside_board(x, y-1) and (board.board[y-1][x] in enemy or board.board[y-1][x] == "empty"):
+        if is_square_inside_board(x, y - 1) and (board.board[y - 1][x] in enemy or board.board[y - 1][x] == "empty"):
             answer.append(str(x) + str(y - 1))
-        if is_square_inside_board(x-1, y-1) and (board.board[y-1][x-1] in enemy or board.board[y-1][x-1] == "empty"):
+        if is_square_inside_board(x - 1, y - 1) and (
+                board.board[y - 1][x - 1] in enemy or board.board[y - 1][x - 1] == "empty"):
             answer.append(str(x - 1) + str(y - 1))
-        if is_square_inside_board(x-1, y) and (board.board[y][x-1] in enemy or board.board[y][x-1] == "empty"):
+        if is_square_inside_board(x - 1, y) and (board.board[y][x - 1] in enemy or board.board[y][x - 1] == "empty"):
             answer.append(str(x - 1) + str(y))
-        if is_square_inside_board(x-1, y+1) and (board.board[y+1][x-1] in enemy or board.board[y+1][x-1] == "empty"):
+        if is_square_inside_board(x - 1, y + 1) and (
+                board.board[y + 1][x - 1] in enemy or board.board[y + 1][x - 1] == "empty"):
             answer.append(str(x - 1) + str(y + 1))
     return answer
+
 
 # def piece_moves(board, x, y): # why
 #     answer = []
@@ -331,29 +348,29 @@ class Board:
         if self.player_to_move == "w":
             enemy = enemy.upper()
             # checks for existing en passants and black pawn attacks
-            if str(x) + str(y-1) == self.en_passant_target:
-                if is_square_inside_board(x+1, y) and self.board[y][x+1] == enemy[5]:
+            if str(x) + str(y - 1) == self.en_passant_target:
+                if is_square_inside_board(x + 1, y) and self.board[y][x + 1] == enemy[5]:
                     return True
-                if is_square_inside_board(x-1, y) and self.board[y][x-1] == enemy[5]:
+                if is_square_inside_board(x - 1, y) and self.board[y][x - 1] == enemy[5]:
                     return True
             # this checks for generic black pawn attacks
             else:
-                if is_square_inside_board(x+1, y+1) and self.board[y+1][x + 1] == enemy[5]:
+                if is_square_inside_board(x + 1, y + 1) and self.board[y + 1][x + 1] == enemy[5]:
                     return True
-                if is_square_inside_board(x-1, y+1) and self.board[y+1][x - 1] == enemy[5]:
+                if is_square_inside_board(x - 1, y + 1) and self.board[y + 1][x - 1] == enemy[5]:
                     return True
         else:
             # checks for existing en passants and white pawn attacks
-            if str(x) + str(y+1) == self.en_passant_target:
-                if is_square_inside_board(x+1, y) and self.board[y][x+1] == enemy[5]:
+            if str(x) + str(y + 1) == self.en_passant_target:
+                if is_square_inside_board(x + 1, y) and self.board[y][x + 1] == enemy[5]:
                     return True
-                if is_square_inside_board(x-1, y) and self.board[y][x-1] == enemy[5]:
+                if is_square_inside_board(x - 1, y) and self.board[y][x - 1] == enemy[5]:
                     return True
             # checks for generic white pawn attacks
             else:
-                if is_square_inside_board(x+1, y-1) and self.board[y-1][x + 1] == enemy[5]:
+                if is_square_inside_board(x + 1, y - 1) and self.board[y - 1][x + 1] == enemy[5]:
                     return True
-                if is_square_inside_board(x-1, y-1) and self.board[y-1][x - 1] == enemy[5]:
+                if is_square_inside_board(x - 1, y - 1) and self.board[y - 1][x - 1] == enemy[5]:
                     return True
         # this checks for rooks and queens with sight to the left of x
         cursor = x - 1
@@ -392,8 +409,8 @@ class Board:
             else:
                 cursor = -1
         # this checks for bishops and queens in the direction of the first quadrant
-        cursor_x = x+1
-        cursor_y = y+1
+        cursor_x = x + 1
+        cursor_y = y + 1
         while is_square_inside_board(cursor_x, cursor_y):
             if self.board[cursor_y][cursor_x] == "empty":
                 cursor_x += 1
@@ -403,8 +420,8 @@ class Board:
             else:
                 cursor_x = -1
         # this checks for bishops and queens in the direction of the second quadrant
-        cursor_x = x-1
-        cursor_y = y+1
+        cursor_x = x - 1
+        cursor_y = y + 1
         while is_square_inside_board(cursor_x, cursor_y):
             if self.board[cursor_y][cursor_x] == "empty":
                 cursor_x -= 1
@@ -436,41 +453,42 @@ class Board:
             else:
                 cursor_x = -1
         # knight attack checks
-        if is_square_inside_board(x+1, y+2) and self.board[y+2][x+1] == enemy[1]:
+        if is_square_inside_board(x + 1, y + 2) and self.board[y + 2][x + 1] == enemy[1]:
             return True
-        elif is_square_inside_board(x+2, y+1) and self.board[y+1][x+2] == enemy[1]:
+        elif is_square_inside_board(x + 2, y + 1) and self.board[y + 1][x + 2] == enemy[1]:
             return True
-        elif is_square_inside_board(x-1, y+2) and self.board[y+2][x-1] == enemy[1]:
+        elif is_square_inside_board(x - 1, y + 2) and self.board[y + 2][x - 1] == enemy[1]:
             return True
-        elif is_square_inside_board(x-2, y+1) and self.board[y+1][x-2] == enemy[1]:
+        elif is_square_inside_board(x - 2, y + 1) and self.board[y + 1][x - 2] == enemy[1]:
             return True
-        elif is_square_inside_board(x-2, y-1) and self.board[y-1][x-2] == enemy[1]:
+        elif is_square_inside_board(x - 2, y - 1) and self.board[y - 1][x - 2] == enemy[1]:
             return True
-        elif is_square_inside_board(x-1, y-2) and self.board[y-2][x-1] == enemy[1]:
+        elif is_square_inside_board(x - 1, y - 2) and self.board[y - 2][x - 1] == enemy[1]:
             return True
-        elif is_square_inside_board(x+1, y-2) and self.board[y-2][x+1] == enemy[1]:
+        elif is_square_inside_board(x + 1, y - 2) and self.board[y - 2][x + 1] == enemy[1]:
             return True
-        elif is_square_inside_board(x+2, y-1) and self.board[y-1][x+2] == enemy[1]:
+        elif is_square_inside_board(x + 2, y - 1) and self.board[y - 1][x + 2] == enemy[1]:
             return True
         # king attack checks
-        if is_square_inside_board(x+1, y+1) and self.board[y+1][x+1] == enemy[4]:
+        if is_square_inside_board(x + 1, y + 1) and self.board[y + 1][x + 1] == enemy[4]:
             return True
-        elif is_square_inside_board(x+1, y) and self.board[y][x+1] == enemy[4]:
+        elif is_square_inside_board(x + 1, y) and self.board[y][x + 1] == enemy[4]:
             return True
-        elif is_square_inside_board(x+1, y-1) and self.board[y-1][x+1] == enemy[4]:
+        elif is_square_inside_board(x + 1, y - 1) and self.board[y - 1][x + 1] == enemy[4]:
             return True
-        elif is_square_inside_board(x, y+1) and self.board[y+1][x] == enemy[4]:
+        elif is_square_inside_board(x, y + 1) and self.board[y + 1][x] == enemy[4]:
             return True
-        elif is_square_inside_board(x, y-1) and self.board[y-1][x] == enemy[4]:
+        elif is_square_inside_board(x, y - 1) and self.board[y - 1][x] == enemy[4]:
             return True
-        elif is_square_inside_board(x-1, y+1) and self.board[y+1][x-1] == enemy[4]:
+        elif is_square_inside_board(x - 1, y + 1) and self.board[y + 1][x - 1] == enemy[4]:
             return True
-        elif is_square_inside_board(x-1, y) and self.board[y][x-1] == enemy[4]:
+        elif is_square_inside_board(x - 1, y) and self.board[y][x - 1] == enemy[4]:
             return True
-        elif is_square_inside_board(x-1, y-1) and self.board[y-1][x-1] == enemy[4]:
+        elif is_square_inside_board(x - 1, y - 1) and self.board[y - 1][x - 1] == enemy[4]:
             return True
         # if it hasn't returned by now, the square is not under attack
         return False
+
 
 if __name__ == '__main__':
     main()

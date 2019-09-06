@@ -2,7 +2,9 @@ from Board import Board, is_square_inside_board
 
 
 def main():
-    print(generator("r3k2r/8/8/8/8/8/8/4R3 w KQkq b2", 4, 0))
+    teste = Board("rnbqkbnr/pppppppp/3P4/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -")
+    moves = generator("rnbqkbnr/pppppppp/3P4/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -", 4, 1)
+    teste.print_board(moves)
 
 # TODO use board read and write methods
 def generator(fen_board, x, y):

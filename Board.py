@@ -24,6 +24,7 @@ def fen_to_board(fen):
     answer.append(info_list[3])
     return answer
 
+
 # TODO develop board read and write methods
 class Board:
     board = []  # coordinates work in y x notation
@@ -195,3 +196,47 @@ class Board:
             return True
         # if it hasn't returned by now, the square is not under attack
         return False
+
+    def print_board(self, moves=None):
+
+        temp_board = self.board
+        for i in range(8):
+            for j in range(8):
+                if temp_board[i][j] == "p":
+                    temp_board[i][j] = "♙"
+                elif temp_board[i][j] == "P":
+                    temp_board[i][j] = "♟"
+                elif temp_board[i][j] == "r":
+                    temp_board[i][j] = "♖"
+                elif temp_board[i][j] == "R":
+                    temp_board[i][j] = "♜"
+                elif temp_board[i][j] == "n":
+                    temp_board[i][j] = "♘"
+                elif temp_board[i][j] == "N":
+                    temp_board[i][j] = "♞"
+                elif temp_board[i][j] == "b":
+                    temp_board[i][j] = "♗"
+                elif temp_board[i][j] == "B":
+                    temp_board[i][j] = "♝"
+                elif temp_board[i][j] == "q":
+                    temp_board[i][j] = "♕"
+                elif temp_board[i][j] == "Q":
+                    temp_board[i][j] = "♛"
+                elif temp_board[i][j] == "k":
+                    temp_board[i][j] = "♔"
+                elif temp_board[i][j] == "K":
+                    temp_board[i][j] = "♚"
+                else:
+                    temp_board[i][j] = "☐"
+        if moves is not None:
+            for i in moves:
+                if temp_board[int(i[1])][int(i[0])] == "empty":
+                    temp_board[int(i[1])][int(i[0])] = "⮽"
+                else:
+                    temp_board[int(i[1])][int(i[0])] = "☒"
+        temp_board.reverse()
+        for i in temp_board:
+            line = ""
+            for j in i:
+                line += j
+            print(line)

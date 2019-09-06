@@ -258,6 +258,23 @@ def pseudo_legal_generator(board, x, y):
             answer.append(str(x + 1) + str(y - 2))
         if is_square_inside_board(x+2, y-1) and (board.board[y-1][x+2] in enemy or board.board[y-1][x+2] == "empty"):
             answer.append(str(x + 2) + str(y - 1))
+    elif piece.lower() == "k":
+        if is_square_inside_board(x, y+1) and (board.board[y+1][x] in enemy or board.board[y+1][x] == "empty"):
+            answer.append(str(x) + str(y + 1))
+        if is_square_inside_board(x+1, y+1) and (board.board[y+1][x+1] in enemy or board.board[y+1][x+1] == "empty"):
+            answer.append(str(x + 1) + str(y + 1))
+        if is_square_inside_board(x+1, y) and (board.board[y][x+1] in enemy or board.board[y][x+1] == "empty"):
+            answer.append(str(x + 1) + str(y))
+        if is_square_inside_board(x+1, y-1) and (board.board[y-1][x+1] in enemy or board.board[y-1][x+1] == "empty"):
+            answer.append(str(x + 1) + str(y - 1))
+        if is_square_inside_board(x, y-1) and (board.board[y-1][x] in enemy or board.board[y-1][x] == "empty"):
+            answer.append(str(x) + str(y - 1))
+        if is_square_inside_board(x-1, y-1) and (board.board[y-1][x-1] in enemy or board.board[y-1][x-1] == "empty"):
+            answer.append(str(x - 1) + str(y - 1))
+        if is_square_inside_board(x-1, y) and (board.board[y][x-1] in enemy or board.board[y][x-1] == "empty"):
+            answer.append(str(x - 1) + str(y))
+        if is_square_inside_board(x-1, y+1) and (board.board[y+1][x-1] in enemy or board.board[y+1][x-1] == "empty"):
+            answer.append(str(x - 1) + str(y + 1))
     return answer
 
 # def piece_moves(board, x, y): # why

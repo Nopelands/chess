@@ -232,10 +232,10 @@ class Board:
                     temp_board[i][j] = "☐"
         if moves is not None:
             for i in moves:
-                if temp_board[int(i[1])][int(i[0])] == "empty":
-                    temp_board[int(i[1])][int(i[0])] = "⮽"
-                else:
+                if temp_board[int(i[1])][int(i[0])] == "☐":
                     temp_board[int(i[1])][int(i[0])] = "☒"
+                else:
+                    temp_board[int(i[1])][int(i[0])] = "☠"
         temp_board.reverse()
         for i in temp_board:
             line = ""

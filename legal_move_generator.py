@@ -6,7 +6,7 @@ def main():
     moves = generator("rnbqkbnr/pppppppp/3P4/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -", 4, 1)
     teste.print_board(moves)
 
-# TODO use board read and write methods
+
 def generator(fen_board, x, y):
     answer = []
     board = Board(fen_board)
@@ -14,19 +14,19 @@ def generator(fen_board, x, y):
     for i in pseudo_legal_moves:
         temp_board = Board(fen_board)
         piece = temp_board.board_read(x, y)
-        temp_board.board[y][x] = "empty"
-        temp_board.board[int(i[1])][int(i[0])] = piece
+        temp_board.board_write(x, y, "empty")
+        temp_board.board_write(int(i[0]), int(i[1]), piece)
         king = temp_board.get_king_square()
         if not temp_board.square_is_under_attack(int(king[0]), int(king[1])):
             answer.append(i)
     if board.board_read(x, y) == "k":
         if "k" in board.castling_rights:
-            if board.board[0][5] == "empty" and board.board[0][6] == "empty":
+            if board.board_read(5, 0) == "empty" and board.board_read(6, 0) == "empty":
                 if (not board.square_is_under_attack(4, 0)) and (not board.square_is_under_attack(5, 0)) and (
                         not board.square_is_under_attack(6, 0)):
                     answer.append("60")
         if "q" in board.castling_rights:
-            if board.board[0][1] == "empty" and board.board[0][2] == "empty" and board.board[0][3] == "empty":
+            if board.board_read(1, 0) == "empty" and board.board_read(2, 0) == "empty" and board.board_read(3, 0) == "empty":
                 if (not board.square_is_under_attack(4, 0)) and (not board.square_is_under_attack(3, 0)) and (
                         not board.square_is_under_attack(2, 0)):
                     answer.append("20")

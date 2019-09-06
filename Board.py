@@ -25,7 +25,6 @@ def fen_to_board(fen):
     return answer
 
 
-# TODO develop board read and write methods
 class Board:
     board = []  # coordinates work in y x notation
     player_to_move = ""
@@ -48,8 +47,11 @@ class Board:
                 if self.board[j][i] == king:
                     return str(i) + str(j)
 
-    def get_piece_in_square(self, x, y):
+    def board_read(self, x, y):
         return self.board[y][x]
+
+    def board_write(self, x, y, input):
+        self.board[y][x] = input
 
     def square_is_under_attack(self, x, y):
         enemy = "rnbqkp"

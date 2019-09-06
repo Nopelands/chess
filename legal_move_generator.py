@@ -13,13 +13,13 @@ def generator(fen_board, x, y):
     pseudo_legal_moves = pseudo_legal_generator(board, x, y)
     for i in pseudo_legal_moves:
         temp_board = Board(fen_board)
-        piece = temp_board.get_piece_in_square(x, y)
+        piece = temp_board.board_read(x, y)
         temp_board.board[y][x] = "empty"
         temp_board.board[int(i[1])][int(i[0])] = piece
         king = temp_board.get_king_square()
         if not temp_board.square_is_under_attack(int(king[0]), int(king[1])):
             answer.append(i)
-    if board.get_piece_in_square(x, y) == "k":
+    if board.board_read(x, y) == "k":
         if "k" in board.castling_rights:
             if board.board[0][5] == "empty" and board.board[0][6] == "empty":
                 if (not board.square_is_under_attack(4, 0)) and (not board.square_is_under_attack(5, 0)) and (
@@ -35,7 +35,7 @@ def generator(fen_board, x, y):
 # TODO use board read and write methods
 def pseudo_legal_generator(board, x, y):
     board = board
-    piece = board.get_piece_in_square(x, y)
+    piece = board.board_read(x, y)
     answer = []
     enemy = "rnbqkp"
     if board.player_to_move == "w":

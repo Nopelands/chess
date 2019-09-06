@@ -17,11 +17,13 @@ def generator(fen_board, x, y):
     if board.get_piece_in_square(x, y) == "k":
         if "k" in board.castling_rights:
             if board.board[0][5] == "empty" and board.board[0][6] == "empty":
-                if (not board.square_is_under_attack(4, 0)) and (not board.square_is_under_attack(5, 0)) and (not board.square_is_under_attack(6, 0)):
+                if (not board.square_is_under_attack(4, 0)) and (not board.square_is_under_attack(5, 0)) and (
+                        not board.square_is_under_attack(6, 0)):
                     answer.append("60")
         if "q" in board.castling_rights:
             if board.board[0][1] == "empty" and board.board[0][2] == "empty" and board.board[0][3] == "empty":
-                if (not board.square_is_under_attack(4, 0)) and (not board.square_is_under_attack(3, 0)) and (not board.square_is_under_attack(2, 0)):
+                if (not board.square_is_under_attack(4, 0)) and (not board.square_is_under_attack(3, 0)) and (
+                        not board.square_is_under_attack(2, 0)):
                     answer.append("20")
     return answer
 

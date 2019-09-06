@@ -1,7 +1,7 @@
 def main():
     test = Board("rnbqkbnr/8/8/8/8/8/8/5P2 w KQkq b2")
     print(test.board)
-    print(pseudo_legal_generator(test, 1, 0))
+    print(test.get_king_square())
 
 
 # def generator(fen_board, x, y):
@@ -338,8 +338,15 @@ class Board:
         self.castling_rights = info[2]
         self.en_passant_target = info[3]
 
-    # def is_piece_in_square(self, x, y): #remove LBYL?
-    #
+    def get_king_square(self):
+        king = "k"
+        if self.player_to_move == "b":
+            king = king.upper()
+        for j in range(8):
+            for i in range(8):
+                if self.board[j][i] == king:
+                    return str(i) + str(j)
+
     def get_piece_in_square(self, x, y):
         return self.board[y][x]
 

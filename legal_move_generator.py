@@ -26,13 +26,14 @@ def generator(fen_board, x, y):
                         not board.square_is_under_attack(6, 0)):
                     answer.append("60")
         if "q" in board.castling_rights:
-            if board.board_read(1, 0) == "empty" and board.board_read(2, 0) == "empty" and board.board_read(3, 0) == "empty":
+            if board.board_read(1, 0) == "empty" and board.board_read(2, 0) == "empty" and board.board_read(3,
+                                                                                                            0) == "empty":
                 if (not board.square_is_under_attack(4, 0)) and (not board.square_is_under_attack(3, 0)) and (
                         not board.square_is_under_attack(2, 0)):
                     answer.append("20")
     return answer
 
-# TODO use board read and write methods
+
 def pseudo_legal_generator(board, x, y):
     board = board
     piece = board.board_read(x, y)
@@ -42,9 +43,9 @@ def pseudo_legal_generator(board, x, y):
         enemy = enemy.upper()
     if piece == "p":
         # this checks normal pawn movement and 2-square advances
-        if is_square_inside_board(x, y + 1) and board.board[y + 1][x] == "empty":
+        if is_square_inside_board(x, y + 1) and board.board_read(x, y + 1) == "empty":
             if y == 1:
-                if board.board[y + 2][x] == "empty":
+                if board.board_read(x, y + 2) == "empty":
                     answer.append(str(x) + str(y + 1))
                     answer.append(str(x) + str(y + 2))
                 else:
@@ -53,16 +54,16 @@ def pseudo_legal_generator(board, x, y):
                 answer.append(str(x) + str(y + 1))
         # this checks both normal pawn capture and en passant
         if is_square_inside_board(x - 1, y + 1) and (
-                board.board[y + 1][x - 1] in enemy or str(x - 1) + str(y + 1) == board.en_passant_target):
+                board.board_read(x - 1, y + 1) in enemy or str(x - 1) + str(y + 1) == board.en_passant_target):
             answer.append(str(x - 1) + str(y + 1))
         if is_square_inside_board(x + 1, y + 1) and (
-                board.board[y + 1][x + 1] in enemy or str(x + 1) + str(y + 1) == board.en_passant_target):
+                board.board_read(x + 1, y + 1) in enemy or str(x + 1) + str(y + 1) == board.en_passant_target):
             answer.append(str(x + 1) + str(y + 1))
     elif piece == "P":
         # this checks normal pawn movement and 2-square advances
-        if is_square_inside_board(x, y - 1) and board.board[y - 1][x] == "empty":
+        if is_square_inside_board(x, y - 1) and board.board_read(x, y - 1) == "empty":
             if y == 6:
-                if board.board[y - 2][x] == "empty":
+                if board.board_read(x, y - 2) == "empty":
                     answer.append(str(x) + str(y - 1))
                     answer.append(str(x) + str(y - 2))
                 else:
@@ -71,19 +72,19 @@ def pseudo_legal_generator(board, x, y):
                 answer.append(str(x) + str(y - 1))
         # this checks both normal pawn capture and en passant
         if is_square_inside_board(x - 1, y - 1) and (
-                board.board[y - 1][x - 1] in enemy or str(x - 1) + str(y - 1) == board.en_passant_target):
+                board.board_read(x - 1, y - 1) in enemy or str(x - 1) + str(y - 1) == board.en_passant_target):
             answer.append(str(x - 1) + str(y - 1))
         if is_square_inside_board(x + 1, y - 1) and (
-                board.board[y - 1][x + 1] in enemy or str(x + 1) + str(y - 1) == board.en_passant_target):
+                board.board_read(x + 1, y - 1) in enemy or str(x + 1) + str(y - 1) == board.en_passant_target):
             answer.append(str(x + 1) + str(y - 1))
     elif piece.lower() == "r":
         # this checks for rook movement and capture to the left
         cursor = x - 1
         while is_square_inside_board(cursor, y):
-            if board.board[y][cursor] == "empty":
+            if board.board_read(cursor, y) == "empty":
                 answer.append(str(cursor) + str(y))
                 cursor -= 1
-            elif board.board[y][cursor] in enemy:
+            elif board.board_read(cursor, y) in enemy:
                 answer.append(str(cursor) + str(y))
                 cursor = -1
             else:
@@ -91,10 +92,10 @@ def pseudo_legal_generator(board, x, y):
         # this checks for rook movement and capture to the right
         cursor = x + 1
         while is_square_inside_board(cursor, y):
-            if board.board[y][cursor] == "empty":
+            if board.board_read(cursor, y) == "empty":
                 answer.append(str(cursor) + str(y))
                 cursor += 1
-            elif board.board[y][cursor] in enemy:
+            elif board.board_read(cursor, y) in enemy:
                 answer.append(str(cursor) + str(y))
                 cursor = -1
             else:
@@ -102,10 +103,10 @@ def pseudo_legal_generator(board, x, y):
         # this checks for rook movement and capture upwards
         cursor = y + 1
         while is_square_inside_board(x, cursor):
-            if board.board[cursor][x] == "empty":
+            if board.board_read(x, cursor) == "empty":
                 answer.append(str(x) + str(cursor))
                 cursor += 1
-            elif board.board[cursor][x] in enemy:
+            elif board.board_read(x, cursor) in enemy:
                 answer.append(str(x) + str(cursor))
                 cursor = -1
             else:
@@ -113,10 +114,10 @@ def pseudo_legal_generator(board, x, y):
         # this checks for rook movement and capture downwards
         cursor = y - 1
         while is_square_inside_board(x, cursor):
-            if board.board[cursor][x] == "empty":
+            if board.board_read(x, cursor) == "empty":
                 answer.append(str(x) + str(cursor))
                 cursor -= 1
-            elif board.board[cursor][x] in enemy:
+            elif board.board_read(x, cursor) in enemy:
                 answer.append(str(x) + str(cursor))
                 cursor = -1
             else:
@@ -126,11 +127,11 @@ def pseudo_legal_generator(board, x, y):
         cursor_x = x + 1
         cursor_y = y + 1
         while is_square_inside_board(cursor_x, cursor_y):
-            if board.board[cursor_y][cursor_x] == "empty":
+            if board.board_read(cursor_x, cursor_y) == "empty":
                 answer.append(str(cursor_x) + str(cursor_y))
                 cursor_x += 1
                 cursor_y += 1
-            elif board.board[cursor_y][cursor_x] in enemy:
+            elif board.board_read(cursor_x, cursor_y) in enemy:
                 answer.append(str(cursor_x) + str(cursor_y))
                 cursor_x = -1
             else:
@@ -139,11 +140,11 @@ def pseudo_legal_generator(board, x, y):
         cursor_x = x - 1
         cursor_y = y + 1
         while is_square_inside_board(cursor_x, cursor_y):
-            if board.board[cursor_y][cursor_x] == "empty":
+            if board.board_read(cursor_x, cursor_y) == "empty":
                 answer.append(str(cursor_x) + str(cursor_y))
                 cursor_x -= 1
                 cursor_y += 1
-            elif board.board[cursor_y][cursor_x] in enemy:
+            elif board.board_read(cursor_x, cursor_y) in enemy:
                 answer.append(str(cursor_x) + str(cursor_y))
                 cursor_x = -1
             else:
@@ -152,11 +153,11 @@ def pseudo_legal_generator(board, x, y):
         cursor_x = x - 1
         cursor_y = y - 1
         while is_square_inside_board(cursor_x, cursor_y):
-            if board.board[cursor_y][cursor_x] == "empty":
+            if board.board_read(cursor_x, cursor_y) == "empty":
                 answer.append(str(cursor_x) + str(cursor_y))
                 cursor_x -= 1
                 cursor_y -= 1
-            elif board.board[cursor_y][cursor_x] in enemy:
+            elif board.board_read(cursor_x, cursor_y) in enemy:
                 answer.append(str(cursor_x) + str(cursor_y))
                 cursor_x = -1
             else:
@@ -165,11 +166,11 @@ def pseudo_legal_generator(board, x, y):
         cursor_x = x + 1
         cursor_y = y - 1
         while is_square_inside_board(cursor_x, cursor_y):
-            if board.board[cursor_y][cursor_x] == "empty":
+            if board.board_read(cursor_x, cursor_y) == "empty":
                 answer.append(str(cursor_x) + str(cursor_y))
                 cursor_x += 1
                 cursor_y -= 1
-            elif board.board[cursor_y][cursor_x] in enemy:
+            elif board.board_read(cursor_x, cursor_y) in enemy:
                 answer.append(str(cursor_x) + str(cursor_y))
                 cursor_x = -1
             else:
@@ -178,10 +179,10 @@ def pseudo_legal_generator(board, x, y):
         # this checks for queen movement and capture to the left
         cursor = x - 1
         while is_square_inside_board(cursor, y):
-            if board.board[y][cursor] == "empty":
+            if board.board_read(cursor, y) == "empty":
                 answer.append(str(cursor) + str(y))
                 cursor -= 1
-            elif board.board[y][cursor] in enemy:
+            elif board.board_read(cursor, y) in enemy:
                 answer.append(str(cursor) + str(y))
                 cursor = -1
             else:
@@ -189,10 +190,10 @@ def pseudo_legal_generator(board, x, y):
         # this checks for queen movement and capture to the right
         cursor = x + 1
         while is_square_inside_board(cursor, y):
-            if board.board[y][cursor] == "empty":
+            if board.board_read(cursor, y) == "empty":
                 answer.append(str(cursor) + str(y))
                 cursor += 1
-            elif board.board[y][cursor] in enemy:
+            elif board.board_read(cursor, y) in enemy:
                 answer.append(str(cursor) + str(y))
                 cursor = -1
             else:
@@ -200,10 +201,10 @@ def pseudo_legal_generator(board, x, y):
         # this checks for queen movement and capture upwards
         cursor = y + 1
         while is_square_inside_board(x, cursor):
-            if board.board[cursor][x] == "empty":
+            if board.board_read(x, cursor) == "empty":
                 answer.append(str(x) + str(cursor))
                 cursor += 1
-            elif board.board[cursor][x] in enemy:
+            elif board.board_read(x, cursor) in enemy:
                 answer.append(str(x) + str(cursor))
                 cursor = -1
             else:
@@ -211,10 +212,10 @@ def pseudo_legal_generator(board, x, y):
         # this checks for queen movement and capture downwards
         cursor = y - 1
         while is_square_inside_board(x, cursor):
-            if board.board[cursor][x] == "empty":
+            if board.board_read(x, cursor) == "empty":
                 answer.append(str(x) + str(cursor))
                 cursor -= 1
-            elif board.board[cursor][x] in enemy:
+            elif board.board_read(x, cursor) in enemy:
                 answer.append(str(x) + str(cursor))
                 cursor = -1
             else:
@@ -223,11 +224,11 @@ def pseudo_legal_generator(board, x, y):
         cursor_x = x + 1
         cursor_y = y + 1
         while is_square_inside_board(cursor_x, cursor_y):
-            if board.board[cursor_y][cursor_x] == "empty":
+            if board.board_read(cursor_x, cursor_y) == "empty":
                 answer.append(str(cursor_x) + str(cursor_y))
                 cursor_x += 1
                 cursor_y += 1
-            elif board.board[cursor_y][cursor_x] in enemy:
+            elif board.board_read(cursor_x, cursor_y) in enemy:
                 answer.append(str(cursor_x) + str(cursor_y))
                 cursor_x = -1
             else:
@@ -236,11 +237,11 @@ def pseudo_legal_generator(board, x, y):
         cursor_x = x - 1
         cursor_y = y + 1
         while is_square_inside_board(cursor_x, cursor_y):
-            if board.board[cursor_y][cursor_x] == "empty":
+            if board.board_read(cursor_x, cursor_y) == "empty":
                 answer.append(str(cursor_x) + str(cursor_y))
                 cursor_x -= 1
                 cursor_y += 1
-            elif board.board[cursor_y][cursor_x] in enemy:
+            elif board.board_read(cursor_x, cursor_y) in enemy:
                 answer.append(str(cursor_x) + str(cursor_y))
                 cursor_x = -1
             else:
@@ -249,11 +250,11 @@ def pseudo_legal_generator(board, x, y):
         cursor_x = x - 1
         cursor_y = y - 1
         while is_square_inside_board(cursor_x, cursor_y):
-            if board.board[cursor_y][cursor_x] == "empty":
+            if board.board_read(cursor_x, cursor_y) == "empty":
                 answer.append(str(cursor_x) + str(cursor_y))
                 cursor_x -= 1
                 cursor_y -= 1
-            elif board.board[cursor_y][cursor_x] in enemy:
+            elif board.board_read(cursor_x, cursor_y) in enemy:
                 answer.append(str(cursor_x) + str(cursor_y))
                 cursor_x = -1
             else:
@@ -262,60 +263,64 @@ def pseudo_legal_generator(board, x, y):
         cursor_x = x + 1
         cursor_y = y - 1
         while is_square_inside_board(cursor_x, cursor_y):
-            if board.board[cursor_y][cursor_x] == "empty":
+            if board.board_read(cursor_x, cursor_y) == "empty":
                 answer.append(str(cursor_x) + str(cursor_y))
                 cursor_x += 1
                 cursor_y -= 1
-            elif board.board[cursor_y][cursor_x] in enemy:
+            elif board.board_read(cursor_x, cursor_y) in enemy:
                 answer.append(str(cursor_x) + str(cursor_y))
                 cursor_x = -1
             else:
                 cursor_x = -1
     elif piece.lower() == "n":
         if is_square_inside_board(x + 1, y + 2) and (
-                board.board[y + 2][x + 1] in enemy or board.board[y + 2][x + 1] == "empty"):
+                board.board_read(x + 1, y + 2) in enemy or board.board_read(x + 1, y + 2) == "empty"):
             answer.append(str(x + 1) + str(y + 2))
         if is_square_inside_board(x + 2, y + 1) and (
-                board.board[y + 1][x + 2] in enemy or board.board[y + 1][x + 2] == "empty"):
+                board.board_read(x + 2, y + 1) in enemy or board.board_read(x + 2, y + 1) == "empty"):
             answer.append(str(x + 2) + str(y + 1))
         if is_square_inside_board(x - 1, y + 2) and (
-                board.board[y + 2][x - 1] in enemy or board.board[y + 2][x - 1] == "empty"):
+                board.board_read(x - 1, y + 2) in enemy or board.board_read(x - 1, y + 2) == "empty"):
             answer.append(str(x - 1) + str(y + 2))
         if is_square_inside_board(x - 2, y + 1) and (
-                board.board[y + 1][x - 2] in enemy or board.board[y + 1][x - 2] == "empty"):
+                board.board_read(x - 2, y + 1) in enemy or board.board_read(x - 2, y + 1) == "empty"):
             answer.append(str(x - 2) + str(y + 1))
         if is_square_inside_board(x - 2, y - 1) and (
-                board.board[y - 1][x - 2] in enemy or board.board[y - 1][x - 2] == "empty"):
+                board.board_read(x - 2, y - 1) in enemy or board.board_read(x - 2, y - 1) == "empty"):
             answer.append(str(x - 2) + str(y - 1))
         if is_square_inside_board(x - 1, y - 2) and (
-                board.board[y - 2][x - 1] in enemy or board.board[y - 2][x - 1] == "empty"):
+                board.board_read(x - 1, y - 2) in enemy or board.board_read(x - 1, y - 2) == "empty"):
             answer.append(str(x - 1) + str(y - 2))
         if is_square_inside_board(x + 1, y - 2) and (
-                board.board[y - 2][x + 1] in enemy or board.board[y - 2][x + 1] == "empty"):
+                board.board_read(x + 1, y - 2) in enemy or board.board_read(x + 1, y - 2) == "empty"):
             answer.append(str(x + 1) + str(y - 2))
         if is_square_inside_board(x + 2, y - 1) and (
-                board.board[y - 1][x + 2] in enemy or board.board[y - 1][x + 2] == "empty"):
+                board.board_read(x + 2, y - 1) in enemy or board.board_read(x + 2, y - 1) == "empty"):
             answer.append(str(x + 2) + str(y - 1))
     elif piece.lower() == "k":
-        if is_square_inside_board(x, y + 1) and (board.board[y + 1][x] in enemy or board.board[y + 1][x] == "empty"):
+        if is_square_inside_board(x, y + 1) and (
+                board.board_read(x, y + 1) in enemy or board.board_read(x, y + 1) == "empty"):
             answer.append(str(x) + str(y + 1))
         if is_square_inside_board(x + 1, y + 1) and (
-                board.board[y + 1][x + 1] in enemy or board.board[y + 1][x + 1] == "empty"):
+                board.board_read(x + 1, y + 1) in enemy or board.board_read(x + 1, y + 1) == "empty"):
             answer.append(str(x + 1) + str(y + 1))
-        if is_square_inside_board(x + 1, y) and (board.board[y][x + 1] in enemy or board.board[y][x + 1] == "empty"):
+        if is_square_inside_board(x + 1, y) and (
+                board.board_read(x + 1, y) in enemy or board.board_read(x + 1, y) == "empty"):
             answer.append(str(x + 1) + str(y))
         if is_square_inside_board(x + 1, y - 1) and (
-                board.board[y - 1][x + 1] in enemy or board.board[y - 1][x + 1] == "empty"):
+                board.board_read(x + 1, y - 1) in enemy or board.board_read(x + 1, y - 1) == "empty"):
             answer.append(str(x + 1) + str(y - 1))
-        if is_square_inside_board(x, y - 1) and (board.board[y - 1][x] in enemy or board.board[y - 1][x] == "empty"):
+        if is_square_inside_board(x, y - 1) and (
+                board.board_read(x, y - 1) in enemy or board.board_read(x, y - 1) == "empty"):
             answer.append(str(x) + str(y - 1))
         if is_square_inside_board(x - 1, y - 1) and (
-                board.board[y - 1][x - 1] in enemy or board.board[y - 1][x - 1] == "empty"):
+                board.board_read(x - 1, y - 1) in enemy or board.board_read(x - 1, y - 1) == "empty"):
             answer.append(str(x - 1) + str(y - 1))
-        if is_square_inside_board(x - 1, y) and (board.board[y][x - 1] in enemy or board.board[y][x - 1] == "empty"):
+        if is_square_inside_board(x - 1, y) and (
+                board.board_read(x - 1, y) in enemy or board.board_read(x - 1, y) == "empty"):
             answer.append(str(x - 1) + str(y))
         if is_square_inside_board(x - 1, y + 1) and (
-                board.board[y + 1][x - 1] in enemy or board.board[y + 1][x - 1] == "empty"):
+                board.board_read(x - 1, y + 1) in enemy or board.board_read(x - 1, y + 1) == "empty"):
             answer.append(str(x - 1) + str(y + 1))
     return answer
 
